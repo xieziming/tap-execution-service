@@ -23,7 +23,7 @@ public class Execution {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(length=100)
+    @Column(length=100, nullable = false)
     private String path = "unclassified";
 
     @Column(length=100, nullable = false)
