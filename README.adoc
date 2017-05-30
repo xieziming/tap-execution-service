@@ -1,6 +1,6 @@
-= Test Automation Platform - Test Case Service
+= Test Automation Platform - Execution Service
 
-This application is providing test case micro service.
+This application is providing execution micro service.
 
 * Build on Spring Boot
 * H2 database
