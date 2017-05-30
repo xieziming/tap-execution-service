@@ -2,6 +2,7 @@ package com.xieziming.tap.execution;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,7 @@ public class ExecutionServiceApplicationTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(this.context).apply(documentationConfiguration(this.restDocumentation)).build();
     }
 
+    @Ignore
     @Test
     public void testRoot() throws Exception {
         this.mockMvc.perform(get("/execution")).
@@ -67,6 +69,7 @@ public class ExecutionServiceApplicationTest {
 
     }
 
+    @Ignore
     @Test
     public void testNotExistRoot() throws Exception {
         this.mockMvc.perform(get("/executions")).andExpect(status().isNotFound());
