@@ -17,6 +17,7 @@ package com.xieziming.tap.execution;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * Application configuration file.
@@ -24,6 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Suny Xie
  */
 @SpringBootApplication
+@EnableCaching
 public class ExecutionServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ExecutionServiceApplication.class, args);
