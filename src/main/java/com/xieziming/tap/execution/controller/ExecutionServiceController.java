@@ -22,12 +22,12 @@ public class ExecutionServiceController {
     @Autowired
     ExecutionService executionService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public Iterable<Execution> findAll(){
         return executionService.findAll();
     }
 
-    @RequestMapping(value = "/", method = {RequestMethod.PUT, RequestMethod.POST})
+    @RequestMapping(value = "", method = {RequestMethod.PUT, RequestMethod.POST})
     public Execution save(@RequestBody Execution execution){
         return executionService.save(execution);
     }
