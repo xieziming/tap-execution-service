@@ -37,6 +37,7 @@ public class ExecutionServiceImpl implements ExecutionService{
         executionRepository.delete(id);
     }
 
+
     @Override
     @Cacheable(value = "execution", key = "#id")
     public Execution findOne(Integer id) {
@@ -44,11 +45,10 @@ public class ExecutionServiceImpl implements ExecutionService{
     }
 
     @Override
-    @Cacheable(value = "execution_search")
+    @Cacheable(value = "execution_search", key = "'findAll'")
     public Iterable<Execution> findAll() {
         return executionRepository.findAll();
     }
-
 
     @Override
     @Cacheable(value = "execution_search", key = "'testCase_'+#testCase.id")
@@ -57,13 +57,13 @@ public class ExecutionServiceImpl implements ExecutionService{
     }
 
     @Override
-    @Cacheable(value = "execution_search", key = "'path'+#path")
+    @Cacheable(value = "execution_search", key = "'path_'+#path")
     public List<Execution> withPath(String path) {
         return executionRepository.findByPath(path);
     }
 
     @Override
-    @Cacheable(value = "execution_search", key = "'status'+#status")
+    @Cacheable(value = "execution_search", key = "'status_'+#status")
     public List<Execution> withStatus(String status) {
         return executionRepository.findByStatus(status);
     }

@@ -7,6 +7,8 @@
 package com.xieziming.tap.execution.model;
 
 import lombok.Data;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,6 +31,30 @@ public class ExecutionContext {
     private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @org.hibernate.annotations.UpdateTimestamp
+    @UpdateTimestamp
     private Date lastModified;
+
+    @Override
+    public String toString() {
+        return "ExecutionContext{" +
+                "id=" + id +
+                ", name=" + name +
+                ", content=" + content +
+                ", lastModified=" + lastModified +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o){
+        boolean equals = false;
+        if(o != null && ExecutionContext.class.isAssignableFrom(o.getClass())){
+            ExecutionContext executionContext = (ExecutionContext) o;
+            equals = (new EqualsBuilder()
+                    .append(name, executionContext.getName())
+                    .append(content, executionContext.getContent())
+                    .append(lastModified, executionContext.getLastModified())
+                    .isEquals());
+        }
+        return equals;
+    }
 }

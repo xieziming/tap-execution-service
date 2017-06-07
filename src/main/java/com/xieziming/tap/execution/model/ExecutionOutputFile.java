@@ -7,37 +7,46 @@
 package com.xieziming.tap.execution.model;
 
 import lombok.Data;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by Suny on 5/8/16.
  */
 @Data
 @Entity
-@Table(name="execution_output_file")
+@Table(name="execution_output_file", uniqueConstraints = {@UniqueConstraint(columnNames={"execution_id", "path"})})
 public class ExecutionOutputFile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Execution execution;
-
     @Column(length=100)
     private String path;
-
-    @Column(length=50)
-    private String fileName;
-
-    @Lob
-    private byte[] raw;
 
     @Column(length=100)
     private String remark;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @org.hibernate.annotations.UpdateTimestamp
-    private Date lastModified;
+    @Override
+    public String toString() {
+        return "ExecutionOutputFile{" +
+                "id=" + id +
+                ", path=" + path +
+                ", remark=" + remark +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o){
+        boolean equals = false;
+        if(o != null && ExecutionOutputFile.class.isAssignableFrom(o.getClass())){
+            ExecutionOutputFile executionOutputFile = (ExecutionOutputFile) o;
+            equals = (new EqualsBuilder()
+                    .append(path, executionOutputFile.getPath())
+                    .append(remark, executionOutputFile.getRemark())
+                    .isEquals());
+        }
+        return equals;
+    }
 }

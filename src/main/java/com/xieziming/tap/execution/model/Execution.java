@@ -7,6 +7,7 @@
 package com.xieziming.tap.execution.model;
 
 import lombok.Data;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -47,12 +48,52 @@ public class Execution {
     @Column(length=500)
     private String remark;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "execution")
+    @OneToMany(targetEntity = ExecutionLog.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "execution_id")
     private List<ExecutionLog> executionLogs;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "execution")
+    @OneToMany(targetEntity = ExecutionOutputText.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "execution_id")
     private List<ExecutionOutputText> executionOutputTexts;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "execution")
+    @OneToMany(targetEntity = ExecutionOutputFile.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "execution_id")
     private List<ExecutionOutputFile> executionOutputFiles;
+
+    @Override
+    public String toString() {
+        return "Execution{" +
+                "id=" + id +
+                ", path=" + path +
+                ", testCase=" + testCase +
+                ", executionContext=" + executionContext +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", status=" + status +
+                ", result=" + result +
+                ", remark=" + remark +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o){
+        boolean equals = false;
+        if(o != null && Execution.class.isAssignableFrom(o.getClass())){
+            Execution execution = (Execution) o;
+            equals = (new EqualsBuilder()
+                    .append(path, execution.getPath())
+                    .append(testCase, execution.getTestCase())
+                    .append(executionContext, execution.getExecutionContext())
+                    .append(startTime, execution.getStartTime())
+                    .append(endTime, execution.getEndTime())
+                    .append(status, execution.getStatus())
+                    .append(result, execution.getResult())
+                    .append(remark, execution.getRemark())
+                    .append(executionLogs, execution.getExecutionLogs())
+                    .append(executionOutputTexts, execution.getExecutionOutputTexts())
+                    .append(executionOutputFiles, execution.getExecutionOutputFiles())
+                    .isEquals());
+        }
+        return equals;
+    }
 }
