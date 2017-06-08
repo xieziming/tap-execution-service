@@ -7,6 +7,8 @@
 package com.xieziming.tap.execution.controller;
 
 import com.xieziming.tap.execution.model.Execution;
+import com.xieziming.tap.execution.search.SearchCondition;
+import com.xieziming.tap.execution.service.ExecutionSearchService;
 import com.xieziming.tap.execution.service.ExecutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ import java.util.List;
 public class ExecutionServiceController {
     @Autowired
     ExecutionService executionService;
+
+    @Autowired
+    ExecutionSearchService executionSearchService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Iterable<Execution> findAll(){
@@ -60,5 +65,10 @@ public class ExecutionServiceController {
     @RequestMapping(value = "search/testCase/{testCase}", method = RequestMethod.GET)
     public List<Execution> withTestCase(@PathVariable String testCase){
         return executionService.withTestCase(testCase);
+    }
+
+    @RequestMapping(value = "search", method = {RequestMethod.PUT, RequestMethod.POST})
+    public List<Execution> search(@RequestBody SearchCondition searchCondition) throws Exception {
+        return executionSearchService.findByConditions(searchCondition);
     }
 }
